@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <form action="">
+            <div>
+                用户名：
+                <input type="text" v-model='uname' v-on:keyup.delete='clearContent'>
+            </div>
+            <div>
+                密码：
+                <input type="text" v-model='pwd' v-on:keyup.enter='handeleSubmit'>
+            </div>
+            <div>
+                <input type="button" v-on:click='handeleSubmit' value="提交">
+            </div>
+        </form>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                uname: '',
+                pwd: ''
+            },
+            methods: {
+                handeleSubmit: function() {
+                    console.log(this.uname, this.pwd);
+                },
+                clearContent: function() {
+                    this.uname = '';
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 方法1：可以在keyup后面直接跟.ASCII值 -->
+        <input type="text" v-on:keyup.aaa='handle' v-model='info'>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        // 方法2
+        Vue.config.keyCodes.aaa = 65;
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                info: ''
+            },
+            methods: {
+                handle: function(event) {
+                    console.log(event.keyCode);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

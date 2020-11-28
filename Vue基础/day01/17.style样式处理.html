@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-bind:style='{border:borderStyle,width:widthStyle,height:heightStyle}'></div>
+        <button v-on:click='handle1'>切换1</button>
+        <div v-bind:style='objStyles'></div>
+        <button v-on:click='handle2'>切换2</button>
+        <div v-bind:style='[baseStyles,overridingStyles]'></div>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                borderStyle: '1px solid blue',
+                widthStyle: '100px',
+                heightStyle: '200px',
+                objStyles: {
+                    border: '1px solid green',
+                    width: '200px',
+                    height: '100px',
+                },
+
+                baseStyles: {
+                    border: '1px solid green',
+                    width: '200px',
+                    height: '100px',
+                },
+                overridingStyles: {
+                    border: '5px solid orange',
+                    backgroundColor: 'blue',
+                }
+            },
+            methods: {
+                handle1: function() {
+                    this.heightStyle = '100px';
+                },
+                handle2: function() {
+                    this.objStyles.width = '100px';
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

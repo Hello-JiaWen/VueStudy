@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{msg}}</div>
+        <input type="text" v-bind:value="msg" v-on:input='handle'>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        /**
+         * v-bind绑定value属性
+         * 用input事件监听value属性变化，然后通过函数事件对象将最新的值赋给msg
+         */
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'hello'
+            },
+            methods: {
+                handle: function(event) {
+                    this.msg = event.target.value;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
