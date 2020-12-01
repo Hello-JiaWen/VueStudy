@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{data|format('yyyy-MM-dd hh:mm:ss')}}</div>
+    </div>
+    <!-- 引入time.js文件 -->
+    <script src="./js/time.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        // 方法1
+        // Vue.filter('format', function (val, arg) {
+        //     if (arg == 'yyyy-MM-dd') {
+        //         var result = '';
+        //         result += val.getFullYear() + '-' + (val.getMonth() + 1) + '-' + val.getDate();
+        //         return result;
+        //     }
+        // });
+
+        // 方法2:调用time.js中已经定义好的方法
+        Vue.filter('format', function (val, arg) {
+            return dateFormat(val, arg);
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                data: new Date(),
+            }
+        });
+    </script>
+</body>
+
+</html>
