@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        .grid {
+            margin: auto;
+            width: 530px;
+            text-align: center;
+        }
+
+        .grid table {
+            border-top: 1px solid #C2D89A;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .grid th,
+        td {
+            padding: 10;
+            border: 1px dashed #F3DCAB;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .grid th {
+            background-color: #F3DCAB;
+        }
+
+        .grid .book {
+            padding-bottom: 10px;
+            padding-top: 5px;
+            background-color: #F3DCAB;
+        }
+
+        .grid .total {
+            height: 30px;
+            line-height: 30px;
+            background-color: #F3DCAB;
+            border-top: 1px solid #F3DCAB;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="grid">
+            <div>
+                <h1>图书管理</h1>
+                <!-- 表头部分开始 -->
+                <div class="book">
+                    <div>
+                        <label for="id">
+                            编号：
+                        </label>
+                        <input type="text" id="id" v-model="id" :disabled="flag" v-focus>
+                        <label for="name">
+                            名称：
+                        </label>
+                        <input type="text" id="name" v-model="name">
+                        <button @click='handle' :disabled='submitFlag'>提交</button>
+                    </div>
+                </div>
+                <!-- 表头部分结束 -->
+            </div>
+            <!-- 设置总数开始 -->
+            <div class="total">
+                <span>图书总数</span>
+                <span>{{total}}</span>
+            </div>
+            <!-- 设置总数结束 -->
+
+            <!-- 列表部分开始 -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in books" :key="index">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.date|format('yyyy-MM-dd hh:mm:ss')}}</td>
+                        <td>
+                            <a href="" @click.prevent='toEdit(item.id)'>修改</a>
+                            <span>|</span>
+                            <a href="" @click.prevent='deleteBook(item.id)'>删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 列表部分结束 -->
+        </div>
+    </div>
+    <script src="./js/time.js"></script>
+    <script src="./js/vue.js"></script>
+    <script>
+        // 使用自定义指令将光标定位在id输入框中
+        Vue.directive('focus', {
+            inserted: function (el) {
+                el.focus();
+            }
+        })
+        // 使用过滤器处理时间格式信息
+        Vue.filter('format', function (val, arg) {
+            // 调用外部时间处理函数time.js，返回处理结果
+            return dateFormat(val, arg);
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                flag: false,
+                submitFlag: false,
+                books: []
+            },
+            methods: {
+                handle: function () {
+                    if (this.flag) {
+                        // 编辑操作
+                        // 根据当前的id更新数组中对应的数据
+                        this.books.some((item) => {
+                            if (item.id == this.id) {
+                                // 将修改后的名称重新写入
+                                item.name = this.name;
+                                // 完成更新操作，终止循环
+                                return true;
+                            }
+                        });
+                        this.flag = false;
+                    } else {
+                        // 添加图书,向数组中添加新的对象
+                        var book = {};
+                        book.id = this.id;
+                        book.name = this.name;
+                        book.date = +new Date();
+                        // 将对象添加进books数组中
+                        this.books.push(book);
+                    }
+                    // 提交完成后清空表单数据
+                    this.id = '';
+                    this.name = '';
+                },
+                toEdit: function (id) {
+                    // 禁止修改id
+                    this.flag = true;
+                    // 根据点击时所传回的id，查询出要编辑的数据
+                    var book = this.books.filter(function (item) {
+                        return item.id == id;
+                    });
+                    // 将获取到的信息通过双向绑定填充到表单
+                    this.id = book[0].id;
+                    this.name = book[0].name;
+                },
+                deleteBook: function (id) {
+                    // 删除图书
+                    // --------------------------------------
+                    // 方法一：根据id从数组中查找元素的索引
+                    // var index = this.books.findIndex(function (item) {
+                    //     return item.id == id
+                    // });
+                    // // 根据索引删除数组元素
+                    // this.books.splice(index, 1);
+
+                    // --------------------------------------
+                    // 方法二：通过filter方法进行删除
+                    this.books = this.books.filter(function (item) {
+                        return item.id != id;
+                    })
+                }
+            },
+            computed: {
+                total: function () {
+                    // 计算图书总数
+                    return this.books.length;
+                }
+            },
+            watch: {
+                name: function (val) {
+                    // 验证图书是否已经存在
+                    var flag = this.books.some(function (item) {
+                        return item.name == val;
+                    });
+                    if (flag) {
+                        // 图书名称存在
+                        this.submitFlag = true;
+                    } else {
+                        this.submitFlag = false;
+                    }
+                },
+                id: function (val) {
+                    // 验证图书id是否存在
+                    var flag = this.books.some(function (item) {
+                        return item.id == val;
+                    });
+                    if (flag) {
+                        // 图书名称存在
+                        this.submitFlag = true;
+                    } else {
+                        this.submitFlag = false;
+                    }
+                }
+            },
+            mounted: function () {
+                // 该生命周期钩子函数被触发时，模板已经可用
+                // 一般此时用于获取后台数据，然后将数据填充到模板
+                var data = [{
+                    id: 1,
+                    name: '三国演义',
+                    date: 2525609975000,
+                }, {
+                    id: 2,
+                    name: '水浒传',
+                    date: 2525609975000,
+                }, {
+                    id: 3,
+                    name: '红楼梦',
+                    date: 2525609975000,
+                }, {
+                    id: 4,
+                    name: '西游记',
+                    date: 2525609975000,
+                }]
+                this.books = data;
+            }
+        })
+    </script>
+</body>
+
+</html>
