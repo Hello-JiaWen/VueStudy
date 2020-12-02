@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div :style='{fontSize: fontSize + "px"}'>测试文本</div>
+        <menu-item @enlarge-text='handle'></menu-item>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        /**
+        * 未完成传值，只传递了信息
+        * $emit()第一个参数是传递的自定义事件名称
+        */
+        Vue.component('menu-item', {
+            template: `
+                <div>
+                    <button @click='$emit("enlarge-text")'>扩大父组件中字体大小</button>
+                </div>
+            `
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                fontSize: 14,
+            },
+            methods: {
+                handle: function () {
+                    // 扩大字体大小
+                    this.fontSize += 5;
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

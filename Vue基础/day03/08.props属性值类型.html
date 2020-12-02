@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 不带:的话数据的类型为str，带:的话为原本类型 -->
+        <menu-item :pstr='pstr' :pnum='12' :pboo='true' :parr='parr' :pobj='pobj'></menu-item>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.component('menu-item', {
+            props: ['pstr', 'pnum', 'pboo', 'parr', 'pobj'],
+            template: `
+                <div>
+                    <div>{{pstr}}</div>
+                    <div>{{pnum}}</div>
+                    <div>{{pboo}}</div>
+                    <ul>
+                        <li :key='index' v-for='(item,index) in parr'>{{item}}</li>
+                    </ul>
+                    <div>
+                        <span>{{pobj.name}}</span>
+                        <span>{{pobj.age}}</span>
+                    </div>
+                </div>
+            `
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pstr: 'hello',
+                parr: ['apple', 'orange', 'banana'],
+                pobj: {
+                    name: 'lisi',
+                    age: 12,
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

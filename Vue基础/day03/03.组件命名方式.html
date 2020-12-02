@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <cpt></cpt>
+        <!-- 驼峰方式中间用短横线分隔 -->
+        <hello-vue></hello-vue>
+        <Hello-Vue></Hello-Vue>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        Vue.component('HelloVue', {
+            data() {
+                return {
+                    msg: 'hello vue'
+                }
+            },
+            template: `
+                <div>{{msg}}</div>
+            `
+        });
+        Vue.component('cpt', {
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            // 在其他模板中调用可以直接用驼峰写
+            template: `
+                <div>
+                    <button @click='handle'>点击了{{count}}次</button>
+                    <HelloVue></HelloVue>    
+                </div>
+            `,
+            methods: {
+                handle: function () {
+                    this.count++;
+                }
+            },
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

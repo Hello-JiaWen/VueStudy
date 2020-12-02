@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1.写死的方式 -->
+        <menu-item title="来自父组件的值"></menu-item>
+        <!-- 2.不写死，通过bind操作属性的方式 -->
+        <menu-item :title="pmsg"></menu-item>
+        <!-- 两种方法可以同时使用 -->
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        Vue.component('menu-item', {
+            data() {
+                return {
+                    cmsg: '子组件中的内容',
+                }
+            },
+            props: ['title'],
+            template: `
+                <div>{{cmsg+"|"+title}}</div>
+            `
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父组件中的内容',
+            }
+        })
+    </script>
+</body>
+
+</html>

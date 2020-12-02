@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 在props中使用驼峰形式，模板中需要使用短横线的形式 -->
+        <menu-item :menu-title="msg"></menu-item>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        Vue.component('menu-item', {
+            data() {
+                return {
+
+                }
+            },
+            props: ['menuTitle'],
+            // 字符串形式的模板中没有这个限制
+            template: `
+                <div>{{menuTitle}}</div>
+            `,
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'Hello'
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <hello-world></hello-world>
+        <hello-tom></hello-tom>
+        <hello-jerry></hello-jerry>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        /**
+         * 局部组件只能在注册他的父组件中使用
+        */
+        // 可以在外部定义组件具体内容
+        var HelloWorld = {
+            data() {
+                return {
+                    msg: 'Hello World'
+                }
+            },
+            template: '<div>{{msg}}</div>'
+        };
+        var HelloTom = {
+            data() {
+                return {
+                    msg: 'Hello Tom'
+                }
+            },
+            template: '<div>{{msg}}</div>'
+        };
+        var HelloJerry = {
+            data() {
+                return {
+                    msg: 'Hello Jerry'
+                }
+            },
+            template: '<div>{{msg}}</div>'
+        };
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            // 局部注册的组件只能在注册的父组件中使用
+            components: {
+                'hello-world': HelloWorld,
+                'hello-tom': HelloTom,
+                'hello-jerry': HelloJerry,
+            }
+        });
+    </script>
+</body>
+
+</html>
