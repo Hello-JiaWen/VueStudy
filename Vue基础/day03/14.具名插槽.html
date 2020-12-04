@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <base-layout>
+            <p slot="header">标题信息1</p>
+            <p slot="header">标题信息2</p>
+            <p>主要内容1</p>
+            <p>主要内容2</p>
+            <p slot="footer">底部信息1</p>
+            <p slot="footer">底部信息2</p>
+        </base-layout>
+        <div>*****************************</div>
+        <base-layout>
+            <!-- template标签的作用即将多个同级标签插入具名插槽，以免写很多slot="xxx" -->
+            <template slot="header">
+                <p>标题信息1</p>
+                <p>标题信息2</p>
+            </template>
+            <p>主要内容1</p>
+            <p>主要内容2</p>
+            <template slot="footer">
+                <p>底部信息1</p>
+                <p>底部信息2</p>
+            </template>
+        </base-layout>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.component('base-layout', {
+            // 将组件标签中的内容分类填充到模板中，没有匹配到的放入默认slot中
+            template: `
+                <div>
+                    <header>
+                        <slot name='header'></slot>
+                    </header>
+                    <main>
+                        <slot></slot>
+                    </main>
+                    <footer>
+                        <slot name='footer'></slot>
+                    </footer>
+                </div>
+            `,
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        });
+    </script>
+</body>
+
+</html>
