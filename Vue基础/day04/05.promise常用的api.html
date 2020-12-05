@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function foo() {
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    // resolve(123);
+                    reject('error');
+                }, 100)
+            })
+        }
+        // foo()
+        //     .then(function (data) {
+        //         console.log(data);
+        //     })
+        //     .catch(function (data) {
+        //         console.log(data);
+        //     })
+        //     .finally(function (data) {
+        //         // 无论成功失败都会触发
+        //         console.log('finished');
+        //     });
+
+        // 和上面等效
+        foo()
+            .then(function (data) {
+                console.log(data);
+            }, function (data) {
+                console.log(data);
+            })
+            .finally(function (data) {
+                // 无论成功失败都会触发
+                console.log('finished');
+            })
+    </script>
+</body>
+
+</html>
