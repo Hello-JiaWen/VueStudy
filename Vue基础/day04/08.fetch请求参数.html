@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 传统url形式
+        fetch('http://localhost:3000/books?id=123', {
+            method: 'get',
+        })
+            .then(function (data) {
+                return data.text();
+            }).then(function (data) {
+                // 这里得到最终的数据
+                console.log(data);
+            });
+
+        // restful形式
+        fetch('http://localhost:3000/books/456', {
+            method: 'get',
+        })
+            .then(function (data) {
+                return data.text();
+            }).then(function (data) {
+                // 这里得到最终的数据
+                console.log(data);
+            });
+
+        fetch('http://localhost:3000/books/789', {
+            method: 'delete',
+        })
+            .then(function (data) {
+                return data.text();
+            }).then(function (data) {
+                // 这里得到最终的数据
+                console.log(data);
+            });
+    </script>
+</body>
+
+</html>

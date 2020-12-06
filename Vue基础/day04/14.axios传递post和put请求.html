@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./js/axios.js"></script>
+    <script>
+        // 传递json格式数据
+        axios.post('http://localhost:3000/axios', {
+            uname: 'lisi',
+            pwd: '123',
+        })
+            .then(function (ret) {
+                console.log(ret.data);
+            });
+
+        // 通过URLSearchParams传递参数
+        const params = new URLSearchParams();
+        params.append('uname', 'zhangsan');
+        params.append('pwd', '321');
+        axios.post('http://localhost:3000/axios', params)
+            .then(function (ret) {
+                console.log(ret.data);
+            });
+
+        axios.put('http://localhost:3000/axios/123', {
+            uname: 'wangwu',
+            pwd: '098',
+        })
+            .then(function (ret) {
+                console.log(ret.data);
+            })
+    </script>
+</body>
+
+</html>

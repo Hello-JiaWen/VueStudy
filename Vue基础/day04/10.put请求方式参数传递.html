@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        fetch('http://localhost:3000/books/123', {
+            method: 'put',
+            body: JSON.stringify({
+                uname: 'zhangsan',
+                pwd: '789',
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(function (data) {
+                return data.text();
+            }).then(function (data) {
+                // 这里得到最终的数据
+                console.log(data);
+            });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./js/axios.js"></script>
+    <script>
+        // 通过url传递参数
+        axios.get('http://localhost:3000/axios?id=1')
+            .then(function (ret) {
+                console.log(ret.data);
+            });
+
+        axios.get('http://localhost:3000/axios/123')
+            .then(function (ret) {
+                console.log(ret.data);
+            });
+
+        // 通过params选项传递参数
+        axios.get('http://localhost:3000/axios', {
+            params: {
+                id: 789,
+            }
+        })
+            .then(function (ret) {
+                console.log(ret.data);
+            });
+
+
+        axios.delete('http://localhost:3000/axios', {
+            params: {
+                id: 111,
+            }
+        })
+            .then(function (ret) {
+                console.log(ret.data);
+            });
+    </script>
+</body>
+
+</html>
