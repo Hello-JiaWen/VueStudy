@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user/1">user1</router-link>
+        <router-link to="/user/2">user2</router-link>
+        <router-link to="/user/3">user3</router-link>
+        <router-link to="/register">register</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <script>
+        var User = {
+            // 使用props接收路由参数
+            props: ['id', 'uname', 'age'],
+            // 使用路由参数
+            template: '<div>{{id}}---{{uname}}---{{age}}</div>',
+        }
+        var Register = {
+            template: '<div>register</div>',
+        }
+        var router = new VueRouter({
+            routes: [
+                // 如果props是一个对象，它会被按原样设置为组件属性，但是这样就没法获取到/:id了，只能接收对象中的属性
+                { path: '/', redirect: '/user' },
+                { path: '/user/:id', component: User, props: { uname: 'lisi', age: 13 } },
+                { path: '/register', component: Register },
+            ]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            router: router,
+        })
+    </script>
+</body>
+
+</html>

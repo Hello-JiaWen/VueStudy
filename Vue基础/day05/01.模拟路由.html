@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <a href="#/zhuye">主页</a>
+        <a href="#/keji">科技</a>
+        <a href="#/caijing">财经</a>
+        <a href="#/yule">娱乐</a>
+        <component :is=change></component>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var zhuye = {
+            template: '<div>主页</div>',
+        }
+        var keji = {
+            template: '<div>科技</div>',
+        }
+        var caijing = {
+            template: '<div>财经</div>',
+        }
+        var yule = {
+            template: '<div>娱乐</div>',
+        }
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                change: 'zhuye',
+            },
+            components: {
+                zhuye,
+                keji,
+                caijing,
+                yule,
+            }
+        })
+        window.onhashchange = function () {
+            console.log(location.hash);
+            switch (location.hash.slice(1)) {
+                case '/zhuye':
+                    vm.change = 'zhuye'
+                    break;
+                case '/keji':
+                    vm.change = 'keji'
+                    break;
+                case '/caijing':
+                    vm.change = 'caijing'
+                    break;
+                case '/yule':
+                    vm.change = 'yule'
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>

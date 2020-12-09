@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user">User</router-link>
+        <router-link to="/register">Register</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <script>
+        var User = {
+            template: `
+                <div>
+                    <h1>用户</h1>
+                    <button @click="goRegister">跳转到注册页面</button>
+                </div>
+            `,
+            methods: {
+                goRegister: function () {
+                    // 命名的路由（传递参数）
+                    // path不能和params一起使用，否则params将无效。需要用name来指定页面。
+                    this.$router.push({
+                        name: 'register',
+                        params: {
+                            uid: 123,
+                            pwd: 12345,
+                        }
+                    });
+                    // 通过params获取路由参数
+                    console.log(this.$route.params);
+                }
+            },
+        }
+        var Register = {
+            template: `
+                <div>
+                    <h1>用户注册界面</h1>
+                    <p>用户名：{{this.$route.params.uid}}</p>
+                    <p>密码：{{this.$route.params.pwd}}</p>
+                    <button @click="goBack">后退</button>    
+                </div>
+            `,
+            methods: {
+                goBack: function () {
+                    this.$router.go(-1);
+                }
+            },
+        }
+        var router = new VueRouter({
+            routes: [
+                {
+                    name: 'user',
+                    path: '/user',
+                    component: User,
+                },
+                {
+                    // 其他传递params参数的方法上面路由组件传递参数
+                    name: 'register',
+                    path: '/register/:uid/:pwd',
+                    component: Register,
+                }
+            ]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            router: router,
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user">User</router-link>
+        <router-link to="/register">Register</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <script>
+        var User = {
+            template: `
+                <div>
+                    <h1>用户id</h1>
+                    <button @click="goRegister">跳转到注册页面</button>
+                </div>
+            `,
+            methods: {
+                goRegister: function () {
+                    // 带查询参数，变成/register?uname=lisi
+                    this.$router.push({
+                        name: 'register',
+                        query: {
+                            uname: 'lisi',
+                            age: 12,
+                        }
+                    });
+                    // 通过query获取路由参数
+                    console.log(this.$route.query);
+                }
+            },
+        }
+        var Register = {
+            template: `
+                <div>
+                    <h1>用户注册界面</h1>
+                    <p>用户名：{{this.$route.query.uname}}</p>
+                    <p>年龄：{{this.$route.query.age}}</p>
+                    <button @click="goBack">后退</button>    
+                </div>
+            `,
+            methods: {
+                goBack: function () {
+                    this.$router.go(-1);
+                }
+            },
+        }
+        var router = new VueRouter({
+            routes: [
+                {
+                    name: 'user',
+                    path: '/user',
+                    component: User,
+                },
+                {
+                    name: 'register',
+                    path: '/register',
+                    component: Register,
+                }
+            ]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            router: router,
+        })
+    </script>
+</body>
+
+</html>

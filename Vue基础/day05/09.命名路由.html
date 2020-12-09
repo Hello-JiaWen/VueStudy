@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user/1">User1</router-link>
+        <!-- 操作to绑定参数对象，name代表路由名称，params代表携带的参数 -->
+        <router-link :to="{name: 'user', params: {id: 3}}">User3</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <script>
+        var User = {
+            props: ['id'],
+            template: '<div>用户：{{id}}</div>'
+        }
+        var router = new VueRouter({
+            routes: [
+                {
+                    // 给路由规则添加name属性
+                    name: 'user',
+                    path: '/user/:id',
+                    component: User,
+                    props: true,
+                }
+            ]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            router: router,
+        })
+    </script>
+</body>
+
+</html>

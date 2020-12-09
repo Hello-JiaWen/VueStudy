@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user/1">user1</router-link>
+        <router-link to="/user/2">user2</router-link>
+        <router-link to="/user/3">user3</router-link>
+        <router-link to="/register">register</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <script>
+        var User = {
+            // 使用props接收路由参数
+            props: ['id'],
+            // 使用路由参数
+            template: '<div>{{id}}</div>',
+        }
+        var Register = {
+            template: '<div>register</div>',
+        }
+        var router = new VueRouter({
+            routes: [
+                // 如果props被设置为true，route.params 将会被设置为组件属性
+                { path: '/', redirect: '/user' },
+                { path: '/user/:id', component: User, props: true },
+                { path: '/register', component: Register },
+            ]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            router: router,
+        })
+    </script>
+</body>
+
+</html>
